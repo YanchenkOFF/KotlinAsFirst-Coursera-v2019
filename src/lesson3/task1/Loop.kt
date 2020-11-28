@@ -213,12 +213,12 @@ fun collatzSteps(x: Int): Int {
  */
 fun sin(x: Double, eps: Double): Double {
     var i = x
-    var rezult = 0.0
-    var counts = 1
+    var rezult = x
+    var counts = 3
     var znak = -1
-    while (i > abs(eps)) {
+    while (abs(i) >= eps) {
         i = Math.pow(x, counts.toDouble()) / factorial(counts)
-        rezult += x + znak * i
+        rezult +=znak * i
         znak *= -1
         counts += 2
     }
@@ -234,7 +234,19 @@ fun sin(x: Double, eps: Double): Double {
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.cos и другие стандартные реализации функции косинуса в этой задаче запрещается.
  */
-fun cos(x: Double, eps: Double): Double = TODO()
+fun cos(x: Double, eps: Double): Double {
+    var i = x
+    var rezult = 1.0
+    var counts = 2
+    var znak = -1
+    while (abs(i) >= eps) {
+        i = Math.pow(x, counts.toDouble()) / factorial(counts)
+        rezult +=znak * i
+        znak *= -1
+        counts += 2
+    }
+    return rezult
+}
 
 /**
  * Средняя
