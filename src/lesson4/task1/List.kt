@@ -403,28 +403,29 @@ fun russian(n: Int): String {
         numberList += number % 10
         number /= 10
     }
-//    numberList = numberList.reversed()
     var count = 0
     for (i in numberList.indices) {
 
         when {
             i == 0 -> result.add(i, baseOnes[numberList[i]])
             i == 1 && numberList[i] != 1 -> result.add(i, baseTens[numberList[i]])
-            i == 1 && numberList[i] == 1 -> result.add(i, base11[numberList[i]])
+            i == 1 && numberList[i] == 1 -> {
+                result.add(i, base11[numberList[i - 1]])
+                result[i - 1] = ""
+            }
             i == 2 -> result.add(i, baseHundreds[numberList[i]])
             i == 3 -> result.add(i, baseThausends[numberList[i]])
             i == 4 && numberList[i] != 1 -> result.add(i, baseTens[numberList[i]])
-            i == 4 && numberList[i] == 1 -> result.add(i, base11[numberList[i]])
+            i == 4 && numberList[i] == 1 -> {
+                result.add(i, base11[numberList[i - 1]] + " тысяч")
+                result[i - 1] = ""
+            }
+
+            i == 5 && numberList[i - 2] == 0 -> result.add(i, baseHundreds[numberList[i]] + " тысяч")
             i == 5 -> result.add(i, baseHundreds[numberList[i]])
+
         }
     }
-
-//    for (i in result.indices) {
-//        if (result[i] in base11) result.removeAt(i-1)
-//    }
-
-
-    println(numberList)
-    println(result)
+    result.removeAll(listOf(""))
     return result.reversed().joinToString(separator = " ")
 }
